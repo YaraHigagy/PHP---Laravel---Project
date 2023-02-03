@@ -9,9 +9,9 @@
     <div class="card-header">POST INFO</div>
     <div class="card-body text-dark">
       <span class="card-title"><strong>Title :-</strong></span>
-      <span class="card-text">Definition for the term.</span>
+      <span class="card-text">{{$post->title}}</span>
       <h6 class="card-title mt-3">Description :-</h6>
-      <p class="card-text">Definition for the term.</p>
+      <p class="card-text">{{$post->description}}</p>
     </div>
   </div>
 
@@ -19,11 +19,11 @@
     <div class="card-header">POST CREATOR INFO</div>
     <div class="card-body text-dark">
       <span class="card-title"><strong>Name :-</strong></span>
-      <span class="card-text">Yara</span><br>
+      <span class="card-text">{{$post->user->name ?? 'Not Found'}}</span><br>
       <span class="card-title mt-3"><strong>Email :-</strong></span>
-      <span class="card-text">yara@tara.com</span><br>
+      <span class="card-text">{{$post->user->email ?? 'Not Found'}}</span><br>
       <span class="card-title mt-3"><strong>Created At :-</strong></span>
-      <span class="card-text">Yara</span>
+      <span class="card-text">{{$post->created_at ?? 'Not Found'}}</span>
     </div>
   </div>
 
