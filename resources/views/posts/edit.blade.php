@@ -14,8 +14,9 @@
     </div>
 @endif
 
-    <form method="POST" action="{{route('posts.index')}}">
-      @csrf
+    <form method="POST" action="{{route('posts.update', $post['id'])}}">
+      @csrf 
+      @method('PUT')
         <div class="mb-3">
             <label class="form-label">Title</label>
             <input name="title" type="text" class="form-control" 

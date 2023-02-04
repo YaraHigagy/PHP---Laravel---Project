@@ -86,6 +86,7 @@ class postController extends Controller
 
     public function update(Request $request, $postId)
     {
+        // dd($request);
         //Validation
         $request -> validate([
             'title' => ['required', 'min:3'],
@@ -104,12 +105,14 @@ class postController extends Controller
             // 'post' => $post,
             // 'users' => $users,
         ]);
+
         return to_route('posts.index');
     }
 
     public function destroy($postId)
     {
-        $deleted = Post::where('id', $postId)->delete();
-        // return view('posts.index');
+        $post = Post::find('id', $postId);
+        $post -> delete();
+        return view('posts.index');
     }
 }
