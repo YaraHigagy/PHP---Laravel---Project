@@ -42,8 +42,8 @@ Route::group(['middleware' => ['auth']], function(){
   Route::get('/posts/{post}/edit', [postController::class, 'edit']) -> name(name: 'posts.edit');
 });
 
-// Route::delete('/posts/{post}', [postController::class, 'destroy']) -> name(name: 'posts.destroy');  //it is wrong as a logic and as syntax because it has the same route path name as show and it leads to show page
 Route::put('/posts/{post}', [postController::class, 'update']) -> name(name: 'posts.update');
+Route::delete('/posts/{post}', [postController::class, 'destroy']) -> name(name: 'posts.destroy');  //it is wrong as a logic and as syntax because it has the same route path name as show and it leads to show page
 
 Auth::routes();
 

@@ -33,11 +33,21 @@
                     {{-- <a href="{{route('posts.show', $post['id'])}}" class="btn btn-info">View</a> --}}
                     <a href="{{route('posts.show', $post->id)}}" class="btn btn-info">View</a>
                     <a href="{{route('posts.edit', $post['id'])}}" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
+                    <span class="btn btn-danger">
+                        <form method="POST" action="{{route('posts.destroy', $post->id)}}">
+                            @csrf
+                            @method('DELETE')
+                            <a>
+                                Delete
+                            </a>
+                        </form>
+                    </span>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+
+{{ $posts->links() }}
 
 @endsection

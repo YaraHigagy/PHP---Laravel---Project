@@ -6,22 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 use App\Http\Requests\StorePostRequest;
+use Cviebrock\EeloquentSluggable\Services\SlugService;
+use Illuminate\Support\Str;
 
 class postController extends Controller
 {
     public function index()
     {
         //select * from posts;
-        $allposts = Post::all();  //  go to Post and the scope resolution is all posts
+        // $allposts = Post::all();  //  go to Post and the scope resolution is all posts
         // dd($allposts);
         // return view( view: 'home', [  //the second (view) is wrong in my version of php or laravel as we don't need named arguments
         //The below syntax is right becuase all arguments are named
         // return view( view: 'home', parameters:[
         //     'posts' => $allposts,
         // ]);
+        $allposts = Post::paginate(5);
         return view('posts.index', [
             //this assoc. array collects all the values of $allposts in its array and call them by $posts variable in home.blade.php
             'posts' => $allposts,
+            
         ]);
     }
 
@@ -60,6 +64,11 @@ class postController extends Controller
             'description' => $description,
             'user_id' => $userId,
         ]);
+        
+        // $slug = SlugService::createSlug(Post::class, 'slug',
+        // $request->title);
+        $slug = Str::of($title)->slug('-');
+        // dd($slug);
         return to_route('posts.index');
     }
 
@@ -88,17 +97,18 @@ class postController extends Controller
     {
         // dd($request);
         //Validation
-        $request -> validate([
-            'title' => ['required', 'min:3'],
-            'description' => ['required', 'min:5'],
-        ]);
+        // $request -> validate([
+        //     'title' => ['required', 'min:3'],
+        //     'description' => ['required', 'min:5'],
+        // ]);
 
-        $post = Post::where('id', $postId)->first();
+        // $post = Post::where('id', $postId)->first();
+        // $post = Post::find('id', $postId);
         $data = $request->all();  
         $title = $data['title'];
         $description = $data['description'];
         $userId = $data['post_creator'];
-        Post::update([
+        Post::where('id', $postId)->update([
             'title' => $title,
             'description' => $description,
             'user_id' => $userId,
@@ -111,8 +121,11 @@ class postController extends Controller
 
     public function destroy($postId)
     {
-        $post = Post::find('id', $postId);
-        $post -> delete();
-        return view('posts.index');
+        // dd($postId);
+        // $post = Post::find($postId);
+        // $post -> delete();
+        Post::find($postId) -> delete();
+        // dd($post);
+        return to_route('posts.index');
     }
 }
